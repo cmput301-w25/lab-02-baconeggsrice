@@ -2,14 +2,20 @@ package com.example.listycity;
 
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ListView;
 
 import androidx.activity.EdgeToEdge;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+
+import com.google.android.material.textfield.TextInputLayout;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -27,8 +33,8 @@ public class MainActivity extends AppCompatActivity {
 
         cityList = findViewById(R.id.city_list);
 
-        String[] cities = {"Edmonton", "Vancouver", "Moscow", "Sydney", "Berlin",
-                "Vienna", "Tokyo", "Beijing", "Osaka", "New Delhi"};
+        String[] cities = {"Edmonton", "Vancouver", "Moscow", "Sydney", "Berlin"};
+//                "Vienna", "Tokyo", "Beijing", "Osaka", "New Delhi"};
 
         dataList = new ArrayList<>();
         dataList.addAll(Arrays.asList(cities));
@@ -36,16 +42,25 @@ public class MainActivity extends AppCompatActivity {
         cityAdapter = new ArrayAdapter<>(this, R.layout.content, dataList);
         cityList.setAdapter(cityAdapter);
 
-        view.findViewById(R.id.add_city_button).setOnClickListener(
-                new View.OnClickListener() {
 
-                    @Override
+        cityList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                dataList.remove(position);
+                cityAdapter.notifyDataSetChanged();
+            }
+        });
 
-                    public void onClick(View view) {
-                        NavHostFragement
-                    }
-                }
-        );
+        Button addCity = findViewById(R.id.add_city_button);
+        EditText addCityText = findViewById(R.id.add_city_text);
+
+        addCity.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dataList.add(addCityText.getText().toString());
+                cityAdapter.notifyDataSetChanged();
+            }
+        });
 
         EdgeToEdge.enable(this);
 

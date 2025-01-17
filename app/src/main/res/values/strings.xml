@@ -2,4 +2,5 @@
     <string name="app_name">ListyCity</string>
     <string name="add_city_button_text">Add City</string>
     <string name="delete_city_button_text">Delete City</string>
+    <string name="content_view">Sample text</string>
 </resources>
